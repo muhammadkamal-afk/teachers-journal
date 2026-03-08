@@ -7,15 +7,12 @@ import {
   Search, 
   FileText, 
   LogOut,
-  Menu,
-  X
 } from 'lucide-react';
 
 export default function Layout({ children }) {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
-  const [menuOpen, setMenuOpen] = useState(false);
 
   const navItems = [
     { path: '/', icon: <LayoutDashboard size={20} />, label: 'Dashboard' },

@@ -16,16 +16,16 @@ export default function Reports() {
   const navigate = useNavigate();
   const [students, setStudents] = useState([]);
   const [journals, setJournals] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [selectedStudent, setSelectedStudent] = useState(null);
+  const [loading, setLoading] = useState(true);  const [selectedStudent, setSelectedStudent] = useState(null);
   const [showAddStudent, setShowAddStudent] = useState(false);
   const [newName, setNewName] = useState('');
   const [newNickname, setNewNickname] = useState('');
   const [adding, setAdding] = useState(false);
   const [copied, setCopied] = useState(false);
 
-  useEffect(() => {
+useEffect(() => {
     loadData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [accessToken]);
 
   async function loadData() {

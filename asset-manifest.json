@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/teachers-journal/static/css/main.8a0948b7.css",
-    "main.js": "/teachers-journal/static/js/main.b6453fb3.js",
+    "main.js": "/teachers-journal/static/js/main.4eae4a5b.js",
     "static/js/453.dd9ab115.chunk.js": "/teachers-journal/static/js/453.dd9ab115.chunk.js",
     "index.html": "/teachers-journal/index.html",
     "main.8a0948b7.css.map": "/teachers-journal/static/css/main.8a0948b7.css.map",
-    "main.b6453fb3.js.map": "/teachers-journal/static/js/main.b6453fb3.js.map",
+    "main.4eae4a5b.js.map": "/teachers-journal/static/js/main.4eae4a5b.js.map",
     "453.dd9ab115.chunk.js.map": "/teachers-journal/static/js/453.dd9ab115.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.8a0948b7.css",
-    "static/js/main.b6453fb3.js"
+    "static/js/main.4eae4a5b.js"
   ]
 }

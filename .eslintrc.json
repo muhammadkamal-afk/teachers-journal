@@ -5,10 +5,3 @@
     "react-hooks/exhaustive-deps": "warn"
   }
 }
-```
-
-**Ctrl+S** lalu di terminal:
-```
-git add .
-git commit -m "downgrade lint errors to warnings"
-git push origin main

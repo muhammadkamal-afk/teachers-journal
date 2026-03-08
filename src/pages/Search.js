@@ -12,7 +12,7 @@ const modeLabel = {
 };
 
 export default function Search() {
-  const { accessToken } = useAuth();
+  const {  } = useAuth();
   const navigate = useNavigate();
   const [students, setStudents] = useState([]);
   const [journals, setJournals] = useState([]);
@@ -25,8 +25,8 @@ export default function Search() {
     async function loadData() {
       try {
         const [s, j] = await Promise.all([
-          getStudents(accessToken),
-          getJournals(accessToken),
+          getStudents(),
+          getJournals(),
         ]);
         setStudents(s);
         setJournals(j);
@@ -37,7 +37,7 @@ export default function Search() {
       }
     }
     loadData();
-  }, [accessToken]);
+  }, []);
 
   const filtered = journals.filter(j => {
     const matchQuery = query === '' || j.content.toLowerCase().includes(query.toLowerCase());

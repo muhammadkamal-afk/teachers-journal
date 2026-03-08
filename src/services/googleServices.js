@@ -1,80 +1,33 @@
-const SPREADSHEET_ID = process.env.REACT_APP_SPREADSHEET_ID;
+const APPS_SCRIPT_URL = process.env.REACT_APP_APPS_SCRIPT_URL;
 
 // ========== STUDENTS ==========
 
-export async function getStudents(accessToken) {
-  const response = await fetch(
-    `https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}/values/Students!A:D`,
-    { headers: { Authorization: `Bearer ${accessToken}` } }
-  );
-  const data = await response.json();
-  const rows = data.values || [];
-  if (rows.length <= 1) return [];
-  return rows.slice(1).map(row => ({
-    student_id: row[0],
-    name: row[1],
-    nickname: row[2],
-    created_at: row[3],
-  }));
+export async function getStudents() {
+  const response = await fetch(`${APPS_SCRIPT_URL}?action=getStudents`);
+  return await response.json();
 }
 
-export async function addStudent(accessToken, student) {
-  const row = [student.student_id, student.name, student.nickname, new Date().toISOString()];
-  await fetch(
-    `https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}/values/Students!A:D:append?valueInputOption=RAW`,
-    {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ values: [row] }),
-    }
-  );
+export async function addStudent(student) {
+  const response = await fetch(APPS_SCRIPT_URL, {
+    method: 'POST',
+    body: JSON.stringify({ action: 'addStudent', ...student }),
+  });
+  return await response.json();
 }
 
 // ========== JOURNAL ==========
 
-export async function getJournals(accessToken) {
-  const response = await fetch(
-    `https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}/values/Journal!A:G`,
-    { headers: { Authorization: `Bearer ${accessToken}` } }
-  );
-  const data = await response.json();
-  const rows = data.values || [];
-  if (rows.length <= 1) return [];
-  return rows.slice(1).map(row => ({
-    journal_id: row[0],
-    date: row[1],
-    mode: row[2],
-    content: row[3],
-    students_tagged: row[4] ? row[4].split(',') : [],
-    photo_urls: row[5] ? row[5].split(',') : [],
-    created_at: row[6],
-  }));
+export async function getJournals() {
+  const response = await fetch(`${APPS_SCRIPT_URL}?action=getJournals`);
+  return await response.json();
 }
 
-export async function addJournal(accessToken, journal) {
-  const row = [
-    journal.journal_id,
-    journal.date,
-    journal.mode,
-    journal.content,
-    journal.students_tagged.join(','),
-    journal.photo_urls.join(','),
-    new Date().toISOString(),
-  ];
-  await fetch(
-    `https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}/values/Journal!A:G:append?valueInputOption=RAW`,
-    {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ values: [row] }),
-    }
-  );
+export async function addJournal(journal) {
+  const response = await fetch(APPS_SCRIPT_URL, {
+    method: 'POST',
+    body: JSON.stringify({ action: 'addJournal', ...journal }),
+  });
+  return await response.json();
 }
 
 // ========== DRIVE UPLOAD ==========

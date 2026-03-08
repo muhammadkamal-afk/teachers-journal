@@ -30,8 +30,8 @@ export default function NewJournal() {
   const [saved, setSaved] = useState(false);
 
   useEffect(() => {
-    getStudents(accessToken).then(setStudents).catch(console.error);
-  }, [accessToken]);
+    getStudents().then(setStudents).catch(console.error);
+  }, []);
 
   const handleDetectStudents = async () => {
     if (!content.trim()) return;
@@ -80,7 +80,6 @@ export default function NewJournal() {
     if (!content.trim()) return alert('Catatan tidak boleh kosong!');
     setLoading(true);
     try {
-      // Upload foto ke Drive
       const photoUrls = [];
       if (photos.length > 0) {
         const desc = await generatePhotoDescription(content);
@@ -112,7 +111,6 @@ export default function NewJournal() {
         }
       }
 
-      // Simpan jurnal
       const journal = {
         journal_id: `j_${Date.now()}`,
         date,
@@ -121,7 +119,7 @@ export default function NewJournal() {
         students_tagged: confirmedStudents,
         photo_urls: photoUrls,
       };
-      await addJournal(accessToken, journal);
+      await addJournal(journal);
       setSaved(true);
       setTimeout(() => navigate('/'), 1500);
     } catch (err) {
@@ -147,7 +145,6 @@ export default function NewJournal() {
         Jurnal Baru
       </h2>
 
-      {/* Mode Selector */}
       <div style={{ marginBottom: '20px' }}>
         <label style={{ fontSize: '13px', fontWeight: '600', color: '#475569', display: 'block', marginBottom: '8px' }}>
           Mode Jurnal
@@ -168,7 +165,6 @@ export default function NewJournal() {
         </div>
       </div>
 
-      {/* Date */}
       <div style={{ marginBottom: '20px' }}>
         <label style={{ fontSize: '13px', fontWeight: '600', color: '#475569', display: 'block', marginBottom: '8px' }}>
           Tanggal
@@ -181,7 +177,6 @@ export default function NewJournal() {
           }} />
       </div>
 
-      {/* Content */}
       <div style={{ marginBottom: '16px' }}>
         <label style={{ fontSize: '13px', fontWeight: '600', color: '#475569', display: 'block', marginBottom: '8px' }}>
           {mode === 'harian' ? 'Catatan' : mode === 'sesi-murid' ? 'Isi Sesi' : 'Catatan Rapat (tulis bebas, AI yang rapikan)'}
@@ -201,7 +196,6 @@ export default function NewJournal() {
           }} />
       </div>
 
-      {/* AI Buttons */}
       <div style={{ display: 'flex', gap: '10px', marginBottom: '20px', flexWrap: 'wrap' }}>
         <button onClick={handleDetectStudents} disabled={detecting || !content.trim()}
           style={{
@@ -228,7 +222,6 @@ export default function NewJournal() {
         )}
       </div>
 
-      {/* Detected Students */}
       {detectedStudents.length > 0 && (
         <div style={{
           backgroundColor: '#f0fdf4', border: '1px solid #86efac', borderRadius: '10px',
@@ -254,7 +247,6 @@ export default function NewJournal() {
         </div>
       )}
 
-      {/* Polished MoM */}
       {polishedMoM && (
         <div style={{
           backgroundColor: '#fdf4ff', border: '1px solid #d8b4fe', borderRadius: '10px',
@@ -278,7 +270,6 @@ export default function NewJournal() {
         </div>
       )}
 
-      {/* Photo Upload */}
       <div style={{ marginBottom: '24px' }}>
         <label style={{ fontSize: '13px', fontWeight: '600', color: '#475569', display: 'block', marginBottom: '8px' }}>
           Foto (opsional)
@@ -315,7 +306,6 @@ export default function NewJournal() {
         )}
       </div>
 
-      {/* Save Button */}
       <button onClick={handleSave} disabled={loading || !content.trim()}
         style={{
           width: '100%', padding: '14px', backgroundColor: '#3b82f6', color: 'white',

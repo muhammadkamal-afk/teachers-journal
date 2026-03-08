@@ -5,7 +5,7 @@ import { getStudents, getJournals } from '../services/googleServices';
 import { PenSquare, Users, BookOpen, Clock } from 'lucide-react';
 
 export default function Dashboard() {
-  const { accessToken } = useAuth();
+  const { } = useAuth();
   const navigate = useNavigate();
   const [students, setStudents] = useState([]);
   const [journals, setJournals] = useState([]);
@@ -15,8 +15,8 @@ export default function Dashboard() {
     async function loadData() {
       try {
         const [s, j] = await Promise.all([
-          getStudents(accessToken),
-          getJournals(accessToken),
+          getStudents(),
+          getJournals(),
         ]);
         setStudents(s);
         setJournals(j);
@@ -27,7 +27,7 @@ export default function Dashboard() {
       }
     }
     loadData();
-  }, [accessToken]);
+  }, []);
 
   const recentJournals = [...journals]
     .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))

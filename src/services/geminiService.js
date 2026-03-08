@@ -10,7 +10,11 @@ async function callGemini(prompt) {
     }),
   });
   const data = await response.json();
-  return data.candidates[0].content.parts[0].text;
+  if (!data.candidates || !data.candidates[0]) {
+  console.error('Gemini response:', data);
+  throw new Error('No response from Gemini');
+}
+return data.candidates[0].content.parts[0].text;
 }
 
 // Deteksi nama murid dari teks catatan

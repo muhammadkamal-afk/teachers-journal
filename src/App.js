@@ -18,7 +18,7 @@ function PrivateRoute({ children }) {
 function App() {
   return (
     <AuthProvider>
-      <Router>
+      <Router basename="/teachers-journal">
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/" element={

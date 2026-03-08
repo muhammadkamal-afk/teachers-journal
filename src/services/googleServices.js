@@ -101,7 +101,37 @@ export async function uploadFileToDrive(accessToken, file, fileName, folderId) {
 }
 
 export async function getOrCreateFolder(accessToken, folderName, parentId) {
-  // Cek apakah folder sudah ada
-  const query = `name='${folderName}' and mimeType='application/vnd.google-apps.folder' and trashed=false${parentId ? ` and '${parentId}' in parents` : ''}`;
+  const trashed = 'trashed=false';
+  const mime = "mimeType='application/vnd.google-apps.folder'";
+  const name = `name='${folderName}'`;
+  const parent = parentId ? ` and '${parentId}' in parents` : '';
+  const query = `${name} and ${mime} and ${trashed}${parent}`;
+
   const response = await fetch(
-    `https://www.googleapis.com/drive/v3/files?q=${encode
+    `https://www.googleapis.com/drive/v3/files?q=${encodeURIComponent(query)}`,
+    { headers: { Authorization: `Bearer ${accessToken}` } }
+  );
+  const data = await response.json();
+
+  if (data.files && data.files.length > 0) {
+    return data.files[0].id;
+  }
+
+  const createResponse = await fetch(
+    'https://www.googleapis.com/drive/v3/files',
+    {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        name: folderName,
+        mimeType: 'application/vnd.google-apps.folder',
+        parents: parentId ? [parentId] : [],
+      }),
+    }
+  );
+  const folder = await createResponse.json();
+  return folder.id;
+}

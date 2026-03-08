@@ -1,4 +1,4 @@
-const GEMINI_API_KEY = process.env.REACT_APP_GEMINI_API_KEY;
+cconst GEMINI_API_KEY = 'AIzaSyBJZ4bFJYeyCq-fhNaL2yYEh3HIFVaj8jA';
 const GEMINI_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`;
 
 async function callGemini(prompt) {

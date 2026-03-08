@@ -1,5 +1,4 @@
-const APPS_SCRIPT_URL = process.env.REACT_APP_APPS_SCRIPT_URL;
-
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyqz6UZ3p-NIEg1I0UaIXoFBzk_Vgz3eBbzY3XIbXNB8RZ27wJabpQQi7eprOggaGI/exec';
 // ========== STUDENTS ==========
 
 export async function getStudents() {
